@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>天心 AI 能力與應用盤點問卷</title>
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入 Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- 引入 SheetJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ghBg: '#f6f8fa',
+                        ghGreen: '#2ea043',
+                        ghGreenHover: '#2c974b',
+                        ghText: '#24292f'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-ghBg min-h-screen font-sans text-ghText relative pb-24">
+
+    <!-- 主表單區塊 -->
+    <div id="mainView" class="py-6 sm:py-10 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-3xl mx-auto">
+            
+            <!-- Main Card -->
+            <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+                
+                <!-- Header -->
+                <div class="bg-[#f0fdf4] border-b border-[#dcfce7] px-6 sm:px-10 py-8 text-[#166534]">
+                    <h1 class="text-2xl sm:text-3xl font-semibold text-center mb-2 tracking-tight">天心 AI 能力與應用盤點問卷</h1>
+                    <p class="text-[#15803d] text-center text-sm sm:text-base">（課前調查 - 自動同步版）</p>
+                </div>
+
+                <!-- Introduction -->
+                <div class="px-6 sm:px-10 py-6 border-b border-gray-200 bg-[#f8fafc]">
+                    <div class="flex items-center gap-2 mb-4">
+                        <i data-lucide="alert-circle" class="w-5 h-5 text-ghGreen"></i>
+                        <h2 class="text-lg font-semibold text-gray-900">問卷前言（精準升級版）</h2>
+                    </div>
+                    <div class="space-y-3 text-gray-600 leading-relaxed text-sm sm:text-base">
+                        <p>各位同仁您好：</p>
+                        <p>本次 AI 內訓將由 <strong>Force 鄭穎臨老師</strong>授課。老師長期專注於數位轉型、企業流程設計與 AI 應用整合，協助企業在導入 AI 時精準應對實務情境。</p>
+                        <p>為了讓本次課程更貼近天心的實際工作需求，特於課前進行本次能力與應用盤點。本問卷採匿名方式填寫，請以「天心工作情境」為主要思考角度。</p>
+                        
+                        <div class="bg-white p-4 rounded-md border border-gray-200 my-4 shadow-sm">
+                            <p class="text-[#166534] font-medium text-sm">
+                                ※ 資料將預設上傳至 Google Sheets 資料庫，送出後您亦可點選下載 Excel 備份。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Content -->
+                <form id="surveyForm" class="px-6 sm:px-10 py-8 space-y-10">
+                    
+                    <!-- 一、AI 使用現況 -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center pb-2 border-b border-gray-100">
+                            <span class="bg-ghGreen w-1.5 h-5 rounded-full mr-3"></span>
+                            一、AI 使用現況
+                        </h3>
+                        <div class="space-y-8">
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">1. 您目前在工作中使用 AI 的頻率為：<span class="text-red-500">*</span></label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q1" value="幾乎沒有使用" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">幾乎沒有使用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q1" value="偶爾使用" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">偶爾使用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q1" value="每週數次" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">每週數次</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q1" value="幾乎每日使用" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">幾乎每日使用</span></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">2. 您目前使用 AI 的方式為：（可複選）</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q2" value="基本對話與內容生成" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">基本對話與內容生成</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q2" value="優化指令（Prompt）" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">優化指令（Prompt）</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q2" value="跨工具搭配使用" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">跨工具搭配使用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q2" value="嘗試設計小型工作流程" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">嘗試設計小型工作流程</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q2" value="尚未形成固定使用模式" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">尚未形成固定使用模式</span></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">3. 您是否已將 AI 納入固定工作流程？<span class="text-red-500">*</span></label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q3" value="尚未" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">尚未</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q3" value="偶爾嘗試" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">偶爾嘗試</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q3" value="部分流程已穩定使用" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">部分流程已穩定使用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q3" value="已成為日常輔助工具之一" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">已成為日常輔助工具之一</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 二、內部工作應用情境 -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center pb-2 border-b border-gray-100">
+                            <span class="bg-ghGreen w-1.5 h-5 rounded-full mr-3"></span>
+                            二、內部工作應用情境
+                        </h3>
+                        <div class="form-group">
+                            <label class="block text-sm font-semibold text-gray-800 mb-3">您目前在哪些內部工作情境使用 AI？（可複選）</label>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q4" value="文件撰寫 / 修稿" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">文件撰寫 / 修稿</span></label>
+                                <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q4" value="簡報製作" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">簡報製作</span></label>
+                                <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q4" value="報表整理 / 分析" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">報表整理 / 分析</span></label>
+                                <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q4" value="教學資料或教育訓練準備" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">教學資料或教育訓練準備</span></label>
+                                <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q4" value="研究新知或學習" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">研究新知或學習</span></label>
+                                <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q4" value="目前尚未用於內部工作" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">目前尚未用於內部工作</span></label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 三、對外服務應用情境 -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center pb-2 border-b border-gray-100">
+                            <span class="bg-ghGreen w-1.5 h-5 rounded-full mr-3"></span>
+                            三、對外服務應用情境
+                        </h3>
+                        <div class="space-y-8">
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">1. 您是否曾在對外服務中輔助使用 AI？<span class="text-red-500">*</span></label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q5" value="尚未" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">尚未</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q5" value="偶爾使用" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">偶爾使用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q5" value="經常使用" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">經常使用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q5" value="已成為固定輔助工具" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">已成為固定輔助工具</span></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">2. 您認為 AI 在「對外服務」最具潛力的提升面向是：（可複選）</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q6" value="客戶回覆品質" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">客戶回覆品質</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q6" value="導入效率與準備速度" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">導入效率與準備速度</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q6" value="提案說服力" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">提案說服力</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q6" value="教學與說明內容製作" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">教學與說明內容製作</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q6" value="專業形象提升" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">專業形象提升</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q6" value="尚不明確" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">尚不明確</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 四、目前優先希望改善的面向 -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center pb-2 border-b border-gray-100">
+                            <span class="bg-ghGreen w-1.5 h-5 rounded-full mr-3"></span>
+                            四、目前優先希望改善的面向
+                        </h3>
+                        <div class="space-y-8">
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">1. 您目前最希望優先改善的一點是：<span class="text-red-500">*</span></label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q7" value="不確定如何精準下指令" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">不確定如何精準下指令</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q7" value="結果品質不穩定" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">結果品質不穩定</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q7" value="難以融入既有流程" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">難以融入既有流程</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q7" value="不清楚適合使用的情境" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">不清楚適合使用的情境</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q7" value="擔心資料或風險問題" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">擔心資料或風險問題</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer">
+                                        <input type="radio" name="q7" value="其他" required class="w-4 h-4 text-ghGreen" id="q7_other_radio">
+                                        <span class="ml-3 text-sm whitespace-nowrap">其他：</span>
+                                        <input type="text" name="q7_other" id="q7_other_input" disabled class="ml-2 flex-1 border-b border-gray-300 focus:border-ghGreen outline-none text-sm bg-transparent" placeholder="請說明...">
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">2. 您認為天心在 AI 應用上，較適合優先加強的方向是：<span class="text-red-500">*</span></label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q8" value="提升個人使用能力" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">提升個人使用能力</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q8" value="整合工作流程" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">整合工作流程</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q8" value="建立基本使用原則" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">建立基本使用原則</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q8" value="強化對外服務應用" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">強化對外服務應用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="radio" name="q8" value="先觀察與逐步嘗試" required class="w-4 h-4 text-ghGreen"><span class="ml-3 text-sm">先觀察與逐步嘗試</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 五、未來期待 -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-6 flex items-center pb-2 border-b border-gray-100">
+                            <span class="bg-ghGreen w-1.5 h-5 rounded-full mr-3"></span>
+                            五、未來發展期待
+                        </h3>
+                        <div class="space-y-8">
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">1. 您希望 AI 協助您提升哪方面能力？（可複選）</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q9" value="工作效率" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">工作效率</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q9" value="專業品質" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">專業品質</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q9" value="提案與表達能力" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">提案與表達能力</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q9" value="跨部門協作" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">跨部門協作</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q9" value="自動化流程" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">自動化流程</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q9" value="個人競爭力" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">個人競爭力</span></label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-3">2. 您對本次課程較期待的內容方向是：（可複選）</label>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q10" value="操作技巧與指令優化" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">操作技巧與指令優化</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q10" value="工作流程整合" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">工作流程整合</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q10" value="ERP × AI 實務案例" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">ERP × AI 實務案例</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q10" value="企業使用邊界與風險" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">企業使用邊界與風險</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q10" value="多工具搭配應用" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">多工具搭配應用</span></label>
+                                    <label class="flex items-center p-3 border border-gray-200 rounded-md hover:bg-[#f0fdf4] cursor-pointer"><input type="checkbox" name="q10" value="AI 發展趨勢與策略" class="w-4 h-4 text-ghGreen rounded"><span class="ml-3 text-sm">AI 發展趨勢與策略</span></label>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- 六、開放式問題 -->
+                    <section>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2 flex items-center pb-2 border-b border-gray-100">
+                            <span class="bg-ghGreen w-1.5 h-5 rounded-full mr-3"></span>
+                            六、開放式問題
+                        </h3>
+                        <p class="text-xs text-gray-500 mb-6 pl-4">（請盡量具體回饋，您的意見對課程規劃非常重要）</p>
+                        
+                        <div class="space-y-6">
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-2">1. 您最希望 AI 協助改善的具體情境：</label>
+                                <textarea name="q11" rows="3" class="w-full p-3 text-sm border border-gray-300 rounded-md bg-[#f6f8fa] focus:bg-white outline-none" placeholder="例如：每月產出報表時，需要花很多時間交叉比對資料..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-2">2. 若您已有成功 AI 經驗，請簡述：</label>
+                                <textarea name="q12" rows="3" class="w-full p-3 text-sm border border-gray-300 rounded-md bg-[#f6f8fa] focus:bg-white outline-none" placeholder="例如：我曾用 AI 幫忙草擬客戶提案信，省下了一半的時間..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-2">3. 您認為未來 1–2 年天心最值得投入的 AI 方向？</label>
+                                <textarea name="q13" rows="3" class="w-full p-3 text-sm border border-gray-300 rounded-md bg-[#f6f8fa] focus:bg-white outline-none" placeholder="您的看法..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label class="block text-sm font-semibold text-gray-800 mb-2">4. 對內訓或未來發展的任何建議？</label>
+                                <textarea name="q14" rows="3" class="w-full p-3 text-sm border border-gray-300 rounded-md bg-[#f6f8fa] focus:bg-white outline-none" placeholder="任何建議..."></textarea>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Submit Button -->
+                    <div class="pt-6 border-t border-gray-100">
+                        <button type="submit" id="submitBtn" class="w-full flex justify-center items-center gap-2 bg-ghGreen hover:bg-ghGreenHover text-white font-semibold py-4 rounded-md shadow-sm transition-all disabled:opacity-50">
+                            <span id="submitText">送出問卷並同步雲端</span>
+                            <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Footer -->
+            <footer class="mt-8 text-center text-sm text-gray-500">
+                <p>&copy; <span id="currentYear"></span> Force Cheng. 版權所有。</p>
+            </footer>
+
+        </div>
+    </div>
+
+    <!-- 成功畫面 -->
+    <div id="successView" class="hidden min-h-screen bg-ghBg flex flex-col items-center justify-center p-4">
+        <div class="bg-white p-10 rounded-lg shadow-sm border border-gray-200 max-w-md w-full text-center">
+            <i data-lucide="check-circle" class="w-20 h-20 text-ghGreen mx-auto mb-6"></i>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">問卷已成功上傳到雲端 Google Sheets 資料庫！</h2>
+            <p class="text-gray-600 mb-8 leading-relaxed">感謝您的寶貴回饋，資料已安全送達。如果您需要自行備份填寫內容，可點擊下方按鈕下載 Excel。</p>
+            
+            <div class="flex flex-col gap-3">
+                <button id="successDownloadBtn" class="w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-md shadow transition">
+                    <i data-lucide="download" class="w-5 h-5"></i> 轉存為 Excel 備份
+                </button>
+                <button onclick="location.reload()" class="w-full border border-gray-300 text-gray-600 py-3 rounded-md hover:bg-gray-50 transition">
+                    返回重新填寫
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 故障轉存 Modal (手動觸發或網路錯誤) -->
+    <div id="errorModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+        <div class="bg-white rounded-lg shadow-2xl max-w-md w-full overflow-hidden">
+            <div class="p-8 text-center">
+                <div class="w-16 h-16 bg-red-100 text-red-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="alert-triangle" class="w-10 h-10"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">同步發生異常</h3>
+                <p class="text-gray-600 mb-8 text-sm leading-relaxed">
+                    目前的環境無法自動連線至雲端資料庫。<br>請點擊下方按鈕將資料「轉存成 Excel」後傳送給老師。
+                </p>
+                <button id="downloadFallbackBtn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-md flex items-center justify-center gap-2 shadow-lg transition">
+                    <i data-lucide="download" class="w-5 h-5"></i> 轉存為 Excel 檔案並關閉
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 管理員面板 -->
+    <div class="fixed bottom-4 right-4 z-40">
+        <div class="bg-white border border-gray-200 rounded-lg shadow-xl p-3 text-xs w-64">
+            <div class="flex justify-between items-center mb-2 font-bold text-gray-700">
+                <span><i data-lucide="database" class="w-3 h-3 inline mr-1"></i> 本地暫存: <span id="responseCount">0</span></span>
+            </div>
+            <div class="flex flex-col gap-2">
+                <button id="exportBtn" class="bg-gray-800 text-white py-1.5 rounded hover:bg-black transition">導出所有歷史紀錄 (.xlsx)</button>
+                <button id="randomFillBtn" class="bg-gray-100 text-gray-600 py-1.5 rounded hover:bg-gray-200 transition">模擬隨機填寫</button>
+                <button id="clearBtn" class="bg-red-50 text-red-600 py-1.5 rounded hover:bg-red-100 transition">清除測試資料</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- GAS 設定 ---
+        const GAS_URL = "https://script.google.com/macros/s/AKfycbx5E2ABW0mnvZmikeTTG4VTG2JHwW_pw1bwLMm3ONbp-xlkVomvT7Z33L2ku-57_NtR/exec";
+
+        lucide.createIcons();
+        const form = document.getElementById('surveyForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const errorModal = document.getElementById('errorModal');
+        const downloadFallbackBtn = document.getElementById('downloadFallbackBtn');
+        const successDownloadBtn = document.getElementById('successDownloadBtn');
+        const clearBtn = document.getElementById('clearBtn');
+        let currentResponse = null;
+
+        // 本地暫存讀取
+        let responses = JSON.parse(localStorage.getItem('tianxin_ai_survey_v2') || '[]');
+        document.getElementById('responseCount').innerText = responses.length;
+
+        // 工具：檔名 (YYYYMMDDHHmm)
+        function getMinuteFilename() {
+            const d = new Date();
+            const f = (v) => String(v).padStart(2, '0');
+            return `AI_Survey_${d.getFullYear()}${f(d.getMonth()+1)}${f(d.getDate())}_${f(d.getHours())}${f(d.getMinutes())}.xlsx`;
+        }
+
+        // 執行 Excel 下載
+        function downloadExcel(dataArray, fileName) {
+            const headers = [
+                "填寫時間", "一.1_使用頻率", "一.2_使用方式", "一.3_固定工作流程", "二_內部工作情境",
+                "三.1_對外服務輔助", "三.2_對外服務潛力", "四.1_優先改善面向", "四.1_優先改善_其他補充",
+                "四.2_公司加強方向", "五.1_提升能力期待", "五.2_課程期待",
+                "六.1_希望改善情境", "六.2_成功案例", "六.3_未來1-2年方向", "六.4_建議與想法"
+            ];
+            const rows = dataArray.map(r => [
+                r.timestamp, 
+                r.q1, 
+                Array.isArray(r.q2) ? r.q2.join('、 ') : r.q2, 
+                r.q3, 
+                Array.isArray(r.q4) ? r.q4.join('、 ') : r.q4, 
+                r.q5, 
+                Array.isArray(r.q6) ? r.q6.join('、 ') : r.q6, 
+                r.q7, 
+                r.q7_other, 
+                r.q8, 
+                Array.isArray(r.q9) ? r.q9.join('、 ') : r.q9, 
+                Array.isArray(r.q10) ? r.q10.join('、 ') : r.q10, 
+                r.q11, 
+                r.q12, 
+                r.q13, 
+                r.q14
+            ]);
+            const ws = XLSX.utils.aoa_to_sheet([headers, ...rows]);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "問卷回覆資料");
+            XLSX.writeFile(wb, fileName);
+        }
+
+        // Q7 其他選項連動
+        document.querySelectorAll('input[name="q7"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const input = document.getElementById('q7_other_input');
+                input.disabled = e.target.value !== '其他';
+                if(e.target.value === '其他') input.focus();
+                else input.value = '';
+            });
+        });
+
+        // 表單送出
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitText.innerText = "資料同步中...";
+
+            const fd = new FormData(form);
+            currentResponse = {
+                timestamp: new Date().toLocaleString('zh-TW'),
+                q1: fd.get('q1'),
+                q2: fd.getAll('q2'),
+                q3: fd.get('q3'),
+                q4: fd.getAll('q4'),
+                q5: fd.get('q5'),
+                q6: fd.getAll('q6'),
+                q7: fd.get('q7'),
+                q7_other: fd.get('q7_other') || '',
+                q8: fd.get('q8'),
+                q9: fd.getAll('q9'),
+                q10: fd.getAll('q10'),
+                q11: fd.get('q11'),
+                q12: fd.get('q12'),
+                q13: fd.get('q13'),
+                q14: fd.get('q14')
+            };
+
+            // 本地暫存紀錄
+            responses.push(currentResponse);
+            localStorage.setItem('tianxin_ai_survey_v2', JSON.stringify(responses));
+            document.getElementById('responseCount').innerText = responses.length;
+
+            try {
+                // 發送到 GAS (no-cors 確保請求發出但不阻斷 UI)
+                await fetch(GAS_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: { 'Content-Type': 'text/plain' },
+                    body: JSON.stringify(currentResponse)
+                });
+                
+                // 顯示成功頁
+                document.getElementById('mainView').classList.add('hidden');
+                document.getElementById('successView').classList.remove('hidden');
+                window.scrollTo(0, 0);
+            } catch (err) {
+                console.error("Sync Error:", err);
+                errorModal.classList.remove('hidden');
+            } finally {
+                submitBtn.disabled = false;
+                submitText.innerText = "送出問卷並同步雲端";
+            }
+        });
+
+        // 成功頁轉存 Excel
+        successDownloadBtn.addEventListener('click', () => {
+            if (currentResponse) {
+                downloadExcel([currentResponse], "Backup_" + getMinuteFilename());
+            }
+        });
+
+        // 故障轉存按鈕
+        downloadFallbackBtn.addEventListener('click', () => {
+            if (currentResponse) {
+                downloadExcel([currentResponse], "FAULT_BACKUP_" + getMinuteFilename());
+                errorModal.classList.add('hidden');
+                document.getElementById('mainView').classList.add('hidden');
+                document.getElementById('successView').classList.remove('hidden');
+            }
+        });
+
+        // 管理員：全導出
+        document.getElementById('exportBtn').addEventListener('click', () => {
+            if(responses.length === 0) return alert("尚無資料可導出");
+            downloadExcel(responses, "Total_" + getMinuteFilename());
+        });
+
+        // 清除資料
+        clearBtn.addEventListener('click', () => {
+            if(window.confirm('確定要清除所有已收集的測試資料嗎？')) {
+                localStorage.removeItem('tianxin_ai_survey_v2');
+                responses = [];
+                document.getElementById('responseCount').innerText = 0;
+            }
+        });
+
+        // 模擬隨機填寫
+        document.getElementById('randomFillBtn').addEventListener('click', () => {
+            const pick = (name) => {
+                const os = form.querySelectorAll(`input[name="${name}"]`);
+                if(os.length) os[Math.floor(Math.random()*os.length)].checked = true;
+            };
+            const pickMulti = (name, count) => {
+                const os = form.querySelectorAll(`input[name="${name}"]`);
+                os.forEach(o => o.checked = false);
+                const shuffled = Array.from(os).sort(() => 0.5 - Math.random());
+                shuffled.slice(0, Math.floor(Math.random() * count) + 1).forEach(o => o.checked = true);
+            };
+            ['q1','q3','q5','q7','q8'].forEach(pick);
+            ['q2','q4','q6','q9','q10'].forEach(n => pickMulti(n, 2));
+            form.querySelector('textarea[name="q11"]').value = "模擬具體情境 " + Date.now();
+            document.querySelector('input[name="q7"]:checked').dispatchEvent(new Event('change'));
+        });
+
+        document.getElementById('currentYear').innerText = new Date().getFullYear();
+    </script>
+</body>
+</html>
